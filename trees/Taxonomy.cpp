@@ -61,6 +61,48 @@ void Taxonomy::print() const
     print(root, path);
 }
 
+int Taxonomy::countSpeciesWithTwoWords() const
+{
+    return countSpeciesWithTwoWords(root);
+}
+
+int Taxonomy::countSpeciesWithTwoWords(Node* node) const
+{
+    if (node->isLeaf()) {
+            return 1;
+        // return countSpaces(node->name) == 1 ? 1 : 0;
+    }
+    int total = 0;
+    for (auto child : node->children)
+    {
+        total += this->countSpeciesWithTwoWords(child);
+    }
+    return total;
+}
+void Taxonomy::printPreOrder() const
+{
+    printPreOrder(root);
+}
+void Taxonomy::printPostOrder() const
+{
+    printPostOrder(root);
+}
+void Taxonomy::printPreOrder(Node* node) const
+{
+    std::cout << "'" << node->name <<"'" <<  " ";
+    for (auto child : node->children) {
+        printPreOrder(child);
+    }
+}
+void Taxonomy::printPostOrder(Node* node) const
+{
+    for (auto child : node->children)
+    {
+        printPostOrder(child);
+    }
+    std::cout << "'" << node->name << "'" << " ";
+}
+
 Taxonomy::~Taxonomy()
 {
     deleteNode(root);
